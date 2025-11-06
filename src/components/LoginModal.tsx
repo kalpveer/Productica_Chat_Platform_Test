@@ -21,7 +21,7 @@ export function LoginModal({
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [submitting, setSubmitting] = useState(false);
-  const { signInWithEmail, signUpWithEmail } = useCreditSystem();
+  const { signInWithEmail, signUpWithEmail, signInWithGoogle } = useCreditSystem();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -87,10 +87,25 @@ export function LoginModal({
               OR
             </span>
           </div>
-          
-          <Button variant="outline" onClick={handleDemoUser} className="w-full border-input-border hover:border-accent text-text-primary bg-surface hover:bg-surface-hover">
-            Continue as Demo User
-          </Button>
+
+          <div className="space-y-3">
+            <Button
+              variant="outline"
+              onClick={() => signInWithGoogle()}
+              disabled={submitting}
+              className="w-full border-input-border hover:border-accent text-text-primary bg-surface hover:bg-surface-hover"
+            >
+              Continue with Google (soon)
+            </Button>
+
+            <Button
+              variant="outline"
+              onClick={handleDemoUser}
+              className="w-full border-input-border hover:border-accent text-text-primary bg-surface hover:bg-surface-hover"
+            >
+              Continue as Demo User
+            </Button>
+          </div>
           
           <div className="text-center">
             <Button variant="ghost" onClick={() => setIsSignUp(!isSignUp)} className="text-zinc-100">
