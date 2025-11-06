@@ -74,15 +74,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   // Email/password - Sign up
   const signUpWithEmail = async (email: string, password: string, fullName?: string) => {
     try {
-      if (supabaseUrl.includes('placeholder')) {
-        toast({
-          title: "Supabase Not Configured",
-          description: "Please set Supabase env vars to enable authentication.",
-          variant: "destructive",
-        })
-        return
-      }
-
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
@@ -92,13 +83,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       })
       if (error) throw error
 
+      // If email confirmation is enabled, there may be no session yet
+      if (data?.user && !data?.session) {
+        toast({ title: 'Verify your email', description: 'We sent a confirmation link to your inbox.' })
+        return
+      }
+
       if (data.user) {
         await initializeUser(data.user)
         toast({ title: 'Account created', description: 'Welcome to Productica!' })
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error signing up:', error)
-      toast({ title: 'Sign Up Failed', description: 'Please try again.', variant: 'destructive' })
+      const message = error?.message || 'Please try again.'
+      toast({ title: 'Sign Up Failed', description: message, variant: 'destructive' })
     }
   }
 
@@ -263,11 +261,30 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // Get initial session
     const getInitialSession = async () => {
       try {
-        const { data: { session }, error } = await supabase.auth.getSession()
+        let { data: { session }, error } = await supabase.auth.getSession()
         
         if (error) {
           console.error('Error getting session:', error)
-          return
+          // try fallback from localStorage if available
+        }
+
+        // Fallback: hydrate from localStorage if Supabase hasn't yet
+        if (!session) {
+          try {
+            const raw = localStorage.getItem('productica-auth')
+            if (raw) {
+              const parsed = JSON.parse(raw)
+              if (parsed?.currentSession?.access_token && parsed?.currentSession?.refresh_token) {
+                const { data, error: setErr } = await supabase.auth.setSession({
+                  access_token: parsed.currentSession.access_token,
+                  refresh_token: parsed.currentSession.refresh_token,
+                })
+                if (!setErr) session = data.session
+              }
+            }
+          } catch (e) {
+            console.warn('Session hydration fallback failed:', e)
+          }
         }
 
         if (mounted) {
