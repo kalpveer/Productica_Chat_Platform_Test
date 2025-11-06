@@ -38,8 +38,7 @@ export function TopBar() {
     loading,
     signInWithGoogle,
     signOut,
-    showLoginModal,
-    enableDemoUser
+    showLoginModal
   } = useCreditSystem();
   const [showAuth, setShowAuth] = useState(false);
   const [authMode, setAuthMode] = useState<"login" | "signup">("login");
@@ -96,7 +95,7 @@ export function TopBar() {
                     <span className="hidden sm:inline">Sign In</span>
                   </Button>
                 </DialogTrigger>
-                <LoginModal open={showAuth} onOpenChange={setShowAuth} onDemoUser={enableDemoUser} />
+                <LoginModal open={showAuth} onOpenChange={setShowAuth} />
               </Dialog>
             ) : (
               <DropdownMenu>

@@ -20,81 +20,32 @@ const openHelpContact = () => {
 
 export function useCreditSystem() {
   const { user, session, loading, signUpWithEmail, signInWithEmail, signInWithGoogle: authSignInWithGoogle, signOut: authSignOut, addCredits: addCreditsToUser, deductCredits: deductCreditsFromUser } = useAuth();
-  
-  // Demo user state for non-authenticated users
-  const [isDemoUser, setIsDemoUser] = useState(() => {
-    return localStorage.getItem("productica_demo_user") === "true";
-  });
-  const [demoCredits, setDemoCredits] = useState(() => {
-    const saved = localStorage.getItem("productica_demo_credits");
-    return saved ? parseInt(saved) : (isDemoUser ? 5 : 0);
-  });
-  
   const { toast } = useToast();
 
-  // Use Supabase user data if authenticated, otherwise use demo data
   const isLoggedIn = !!session;
-  const credits = isLoggedIn ? (user?.credits || 0) : demoCredits;
+  const credits = user?.credits || 0;
 
   const deductCredit = useCallback(async (description: string = "AI Analysis", module?: string) => {
-    if (isLoggedIn) {
-      // Use Supabase for authenticated users
-      const success = await deductCreditsFromUser(1, description, module);
-      return success;
-    } else {
-      // Use local storage for demo users
-      if (demoCredits > 0) {
-        const newCredits = demoCredits - 1;
-        setDemoCredits(newCredits);
-        localStorage.setItem("productica_demo_credits", newCredits.toString());
-        
-        toast({
-          title: "Credit Used",
-          description: `${newCredits} credits remaining`,
-          duration: 2000,
-        });
-        return true;
-      }
+    if (!isLoggedIn) {
+      toast({ title: "Login Required", description: "Please login to continue.", duration: 3000 });
       return false;
     }
-  }, [isLoggedIn, demoCredits, deductCreditsFromUser, toast]);
+    const success = await deductCreditsFromUser(1, description, module);
+    return success;
+  }, [isLoggedIn, deductCreditsFromUser, toast]);
 
   const addCredits = useCallback(async (amount: number, type: 'purchased' | 'bonus' = 'purchased', description: string = "Credits added") => {
-    if (isLoggedIn) {
-      // Use Supabase for authenticated users
-      await addCreditsToUser(amount, type, description);
-    } else {
-      // Use local storage for demo users
-      const newCredits = demoCredits + amount;
-      setDemoCredits(newCredits);
-      localStorage.setItem("productica_demo_credits", newCredits.toString());
-      
-      toast({
-        title: "Credits Added!",
-        description: `${amount} credits added. Total: ${newCredits}`,
-        duration: 3000,
-      });
+    if (!isLoggedIn) {
+      toast({ title: "Login Required", description: "Please login to continue.", duration: 3000 });
+      return;
     }
-  }, [isLoggedIn, demoCredits, addCreditsToUser, toast]);
-
-  const enableDemoUser = useCallback(() => {
-    setIsDemoUser(true);
-    const demoCredits = 5;
-    setDemoCredits(demoCredits);
-    localStorage.setItem("productica_demo_user", "true");
-    localStorage.setItem("productica_demo_credits", demoCredits.toString());
-    
-    toast({
-      title: "Demo Mode Activated",
-      description: "You have 5 free credits to explore Productica",
-      duration: 3000,
-    });
-  }, [toast]);
+    await addCreditsToUser(amount, type, description);
+  }, [isLoggedIn, addCreditsToUser, toast]);
 
   const showLoginModal = useCallback(() => {
     toast({
       title: "Login Required",
-      description: "Please login to use Productica's AI modules or continue as demo user",
+      description: "Please login to use Productica's AI modules",
       duration: 3000,
     });
   }, [toast]);
@@ -131,12 +82,10 @@ export function useCreditSystem() {
   return {
     credits,
     isLoggedIn,
-    isDemoUser,
     user,
     loading,
     deductCredit,
     addCredits,
-    enableDemoUser,
     showLoginModal,
     showOutOfCreditsModal,
     showPurchaseModal,

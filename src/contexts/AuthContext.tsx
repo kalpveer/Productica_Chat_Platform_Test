@@ -3,7 +3,7 @@ import { User as SupabaseUser, Session } from '@supabase/supabase-js'
 import { supabase, User, CreditTransaction } from '@/lib/supabase'
 import { useToast } from '@/hooks/use-toast'
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://placeholder.supabase.co'
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
 
 interface AuthContextType {
   user: User | null
@@ -30,22 +30,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   // Initialize user data from Supabase
   const initializeUser = async (supabaseUser: SupabaseUser) => {
     try {
-      // Skip Supabase operations if using placeholder credentials
-      if (supabaseUrl.includes('placeholder')) {
-        console.warn('Supabase not configured - using demo mode')
-        // Create a demo user for testing
-        const demoUser: User = {
-          id: supabaseUser.id,
-          email: supabaseUser.email || 'demo@example.com',
-          full_name: supabaseUser.user_metadata?.full_name || supabaseUser.user_metadata?.name || 'Demo User',
-          avatar_url: supabaseUser.user_metadata?.avatar_url,
-          credits: 5,
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
-        }
-        setUser(demoUser)
-        return
-      }
 
       // Check if user exists in our users table
       const selectProfile = async () => {
@@ -159,17 +143,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   // Sign out
   const signOut = async () => {
     try {
-      if (supabaseUrl.includes('placeholder')) {
-        // Demo mode - just clear local state
-        setUser(null)
-        setSession(null)
-        toast({
-          title: "Signed Out",
-          description: "You have been signed out successfully.",
-        })
-        return
-      }
-
       const { error } = await supabase.auth.signOut()
       if (error) throw error
       

@@ -74,7 +74,7 @@ export function ChatInterface() {
   const navigate = useNavigate();
   const { getContextString } = useStartupContext();
   const { generateReportPDF } = usePDFGenerator();
-  const { credits, deductCredit, isLoggedIn, isDemoUser, enableDemoUser, showLoginModal, showPurchaseModal, showOutOfCreditsModal } = useCreditSystem();
+  const { credits, deductCredit, isLoggedIn, showLoginModal, showPurchaseModal, showOutOfCreditsModal } = useCreditSystem();
   const [showLogin, setShowLogin] = useState(false);
   const { activeChatId, chats, addChat, setActiveChat, appendMessage } = useGlobalStore(useShallow((s) => ({
     activeChatId: s.activeChatId,
@@ -150,7 +150,7 @@ export function ChatInterface() {
   }, [messages]);
 
   const handleModuleSelect = async (module: typeof moduleCards[0]) => {
-    if (!isLoggedIn && !isDemoUser) {
+    if (!isLoggedIn) {
       setShowLogin(true);
       return;
     }
@@ -171,7 +171,7 @@ export function ChatInterface() {
     e.preventDefault();
     if (!input.trim() || isLoading) return;
 
-    if (!isLoggedIn && !isDemoUser) {
+    if (!isLoggedIn) {
       setShowLogin(true);
       return;
     }
@@ -457,7 +457,6 @@ export function ChatInterface() {
       <LoginModal 
         open={showLogin} 
         onOpenChange={setShowLogin}
-        onDemoUser={enableDemoUser}
       />
 
     </div>

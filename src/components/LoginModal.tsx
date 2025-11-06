@@ -9,12 +9,10 @@ import { useCreditSystem } from "@/hooks/useCreditSystem";
 interface LoginModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onDemoUser: () => void;
 }
 export function LoginModal({
   open,
-  onOpenChange,
-  onDemoUser
+  onOpenChange
 }: LoginModalProps) {
   const [isSignUp, setIsSignUp] = useState(false);
   const [email, setEmail] = useState("");
@@ -38,10 +36,7 @@ export function LoginModal({
       setSubmitting(false);
     }
   };
-  const handleDemoUser = () => {
-    onDemoUser();
-    onOpenChange(false);
-  };
+  
   return <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-md bg-[hsl(var(--modal-background))] border-border">
         <DialogHeader>
@@ -96,14 +91,6 @@ export function LoginModal({
               className="w-full border-input-border hover:border-accent text-text-primary bg-surface hover:bg-surface-hover"
             >
               Continue with Google (soon)
-            </Button>
-
-            <Button
-              variant="outline"
-              onClick={handleDemoUser}
-              className="w-full border-input-border hover:border-accent text-text-primary bg-surface hover:bg-surface-hover"
-            >
-              Continue as Demo User
             </Button>
           </div>
           
