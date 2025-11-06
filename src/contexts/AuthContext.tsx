@@ -271,13 +271,27 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         // Fallback: hydrate from localStorage if Supabase hasn't yet
         if (!session) {
           try {
-            const raw = localStorage.getItem('productica-auth')
-            if (raw) {
-              const parsed = JSON.parse(raw)
-              if (parsed?.currentSession?.access_token && parsed?.currentSession?.refresh_token) {
+            // Check our custom storage key
+            const rawCustom = localStorage.getItem('productica-auth')
+            // Check Supabase default storage key derived from project ref
+            let rawDefault: string | null = null
+            try {
+              const refMatch = (import.meta.env.VITE_SUPABASE_URL as string)?.match(/^https:\/\/([^.]+)\./)
+              const projectRef = refMatch?.[1]
+              if (projectRef) {
+                rawDefault = localStorage.getItem(`sb-${projectRef}-auth-token`)
+              }
+            } catch {}
+
+            const candidate = rawCustom || rawDefault
+            if (candidate) {
+              const parsed = JSON.parse(candidate)
+              const access_token = parsed?.currentSession?.access_token || parsed?.access_token
+              const refresh_token = parsed?.currentSession?.refresh_token || parsed?.refresh_token
+              if (access_token && refresh_token) {
                 const { data, error: setErr } = await supabase.auth.setSession({
-                  access_token: parsed.currentSession.access_token,
-                  refresh_token: parsed.currentSession.refresh_token,
+                  access_token,
+                  refresh_token,
                 })
                 if (!setErr) session = data.session
               }
