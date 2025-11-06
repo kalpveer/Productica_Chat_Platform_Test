@@ -1,0 +1,342 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Productica Design System - Futuristic Dark Minimal Theme */
+
+@layer base {
+  :root {
+    /* Light Theme - Clean & Minimal with Black Text */
+    
+    /* Primary Background - Clean White */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 0%;
+    
+    /* Secondary Background - Light Gray */
+    --surface: 0 0% 96%;
+    --surface-hover: 0 0% 88%;
+    --surface-active: 0 0% 85%;
+    
+    /* Card Colors - White with soft shadows */
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 0%;
+    --card-hover: 0 0% 96%;
+    
+    /* Input & Form Colors - Light backgrounds */
+    --input: 0 0% 96%;
+    --input-border: 0 0% 90%;
+    --input-focus: 0 0% 85%;
+    
+    /* Interactive Elements - Neutral grayscale */
+    --primary: 0 0% 20%;
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 0 0% 0%;
+    
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 0%;
+    --secondary-hover: 0 0% 88%;
+    
+    /* Accent & Highlights - Neutral grayscale */
+    --accent: 0 0% 90%;
+    --accent-foreground: 0 0% 0%;
+    --accent-hover: 0 0% 88%;
+    
+    /* Text Hierarchy - Black text for readability */
+    --text-primary: 0 0% 0%;
+    --text-secondary: 0 0% 20%;
+    --text-muted: 0 0% 40%;
+    --text-disabled: 0 0% 60%;
+    
+    /* Borders & Dividers - Light neutral borders */
+    --border: 0 0% 90%;
+    --border-hover: 0 0% 85%;
+    --divider: 0 0% 90%;
+    
+    /* Status Colors - Keep meaningful colors */
+    --success: 142.1 76.2% 36.3%;
+    --success-foreground: 0 0% 100%;
+    --warning: 32.2 95% 44%;
+    --warning-foreground: 0 0% 0%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+    
+    /* Sidebar Specific - Light sidebar */
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 0 0% 0%;
+    --sidebar-border: 0 0% 90%;
+    --sidebar-hover: 0 0% 96%;
+    --sidebar-active: 0 0% 90%;
+    
+    /* Login/Signup Modal - Light modal */
+    --modal-background: 0 0% 100%;
+    --modal-foreground: 0 0% 0%;
+    
+    /* Animations & Effects - Light shadows */
+    --shadow-sm: 0 1px 2px 0 hsl(0 0% 0% / 0.05);
+    --shadow-md: 0 4px 6px -1px hsl(0 0% 0% / 0.1), 0 2px 4px -2px hsl(0 0% 0% / 0.1);
+    --shadow-lg: 0 10px 15px -3px hsl(0 0% 0% / 0.1), 0 4px 6px -4px hsl(0 0% 0% / 0.1);
+    --shadow-xl: 0 20px 25px -5px hsl(0 0% 0% / 0.1), 0 8px 10px -6px hsl(0 0% 0% / 0.1);
+    
+    --transition-fast: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-normal: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    --radius: 12px;
+    --radius-sm: 8px;
+    --radius-lg: 16px;
+    --radius-xl: 20px;
+    
+    /* Credit System Colors - Neutral grayscale */
+    --credits-bg: 0 0% 96%;
+    --credits-border: 0 0% 90%;
+    --credits-glow: 0 0% 20% / 0.2;
+    
+    /* Muted foreground for subtle text */
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 40%;
+    
+    /* Ring for focus states - Neutral */
+    --ring: 0 0% 20%;
+  }
+
+  .dark {
+    /* Futuristic Dark Minimal Theme - Deep Charcoal Base */
+    
+    /* Primary Background - #0C0C0C (Deep Charcoal) */
+    --background: 0 0% 5%;
+    --foreground: 0 0% 81%; /* #CFCFCF Soft Gray */
+    
+    /* Secondary Background - Slightly lighter than background */
+    --surface: 0 0% 8%;
+    --surface-hover: 0 0% 12%;
+    --surface-active: 0 0% 15%;
+    
+    /* Card Colors - Elevated surface */
+    --card: 0 0% 8%;
+    --card-foreground: 0 0% 81%;
+    --card-hover: 0 0% 12%;
+    
+    /* Input & Form Colors */
+    --input: 0 0% 8%;
+    --input-border: 0 0% 20%;
+    --input-focus: 0 0% 25%;
+    
+    /* Interactive Elements */
+    --primary: 0 0% 81%; /* Soft Gray */
+    --primary-foreground: 0 0% 5%;
+    --primary-hover: 0 0% 90%;
+    
+    --secondary: 0 0% 12%;
+    --secondary-foreground: 0 0% 81%;
+    --secondary-hover: 0 0% 15%;
+    
+    /* Accent & Highlights */
+    --accent: 0 0% 15%;
+    --accent-foreground: 0 0% 81%;
+    --accent-hover: 0 0% 20%;
+    
+    /* Text Hierarchy */
+    --text-primary: 0 0% 81%;   /* #CFCFCF */
+    --text-secondary: 0 0% 65%; 
+    --text-muted: 0 0% 50%;     
+    --text-disabled: 0 0% 30%;  
+    
+    /* Borders & Dividers */
+    --border: 0 0% 15%;
+    --border-hover: 0 0% 20%;
+    --divider: 0 0% 12%;
+    
+    /* Status Colors */
+    --success: 142.1 76.2% 36.3%;
+    --success-foreground: 0 0% 100%;
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 0%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    
+    /* Sidebar Specific */
+    --sidebar-background: 0 0% 5%;
+    --sidebar-foreground: 0 0% 81%;
+    --sidebar-border: 0 0% 15%;
+    --sidebar-hover: 0 0% 10%;
+    --sidebar-active: 0 0% 15%;
+    
+    /* Login/Signup Modal */
+    --modal-background: 0 0% 8%;
+    --modal-foreground: 0 0% 81%;
+    
+    /* Animations & Effects */
+    --shadow-sm: 0 1px 2px 0 hsl(0 0% 0% / 0.3);
+    --shadow-md: 0 4px 6px -1px hsl(0 0% 0% / 0.3), 0 2px 4px -2px hsl(0 0% 0% / 0.3);
+    --shadow-lg: 0 10px 15px -3px hsl(0 0% 0% / 0.4), 0 4px 6px -4px hsl(0 0% 0% / 0.4);
+    --shadow-xl: 0 20px 25px -5px hsl(0 0% 0% / 0.5), 0 8px 10px -6px hsl(0 0% 0% / 0.5);
+    
+    --transition-fast: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-normal: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    --radius: 12px;
+    --radius-sm: 8px;
+    --radius-lg: 16px;
+    --radius-xl: 20px;
+    
+    /* Credit System Colors */
+    --credits-bg: 0 0% 8%;
+    --credits-border: 0 0% 15%;
+    --credits-glow: 0 0% 81% / 0.2;
+    
+    /* Muted foreground for subtle text */
+    --muted: 0 0% 8%;
+    --muted-foreground: 0 0% 50%;
+    
+    /* Ring for focus states */
+    --ring: 0 0% 81%;
+  }
+}
+
+/* Global Animations */
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }  
+}
+
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slide-in-left {
+  from { opacity: 0; transform: translateX(-12px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slide-in-right {
+  from { opacity: 0; transform: translateX(12px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 20px hsl(var(--credits-glow)); }
+  50% { box-shadow: 0 0 30px hsl(var(--credits-glow)), 0 0 40px hsl(var(--credits-glow)); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes typewriter {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0.8);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+@keyframes glow-ring {
+  0%, 100% { 
+    box-shadow: 0 0 5px currentColor, 0 0 10px currentColor, 0 0 15px currentColor;
+  }
+  50% { 
+    box-shadow: 0 0 10px currentColor, 0 0 20px currentColor, 0 0 30px currentColor;
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { 
+    opacity: 0.6;
+    filter: brightness(1);
+  }
+  50% { 
+    opacity: 1;
+    filter: brightness(1.2);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border transition-colors;
+  }
+
+  body {
+    @apply bg-background text-foreground transition-colors duration-300;
+  }
+}
+
+/* Perplexity-Inspired Dark Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--background));
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--accent));
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--surface));
+}
+
+::-webkit-scrollbar-corner {
+  background: hsl(var(--background));
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--accent)) hsl(var(--background));
+}
+
+/* Typing animation styles */
+.typing-indicator {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.typing-indicator .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: hsl(var(--primary));
+  animation: typing 1.4s infinite ease-in-out;
+}
+
+.typing-indicator .dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.typing-indicator .dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes typing {
+  0%, 80%, 100% {
+    opacity: 0.3;
+    transform: scale(0.8);
+  }
+  40% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
